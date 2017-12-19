@@ -1,0 +1,74 @@
+table {
+    width: 1000px;
+    table-layout: fixed;
+    word-wrap: break-word;
+    word-break: break-all;
+}
+
+td {
+    width: 100px;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+th {
+    width: 100px;
+}
+
+#increase {
+    padding-right: 30px;
+}
+
+#tr1 {
+    background-color: chartreuse;
+    color: blue
+}
+
+#stuNameTd {
+    color: red
+}
+
+#last {
+    text-align: center;
+}
+
+.stuStatus {
+    color: coral;
+}
+
+tr td:nth-child(0) {
+    text-align: center;
+}
+
+tr td:nth-child(1) {
+    text-align: center;
+}
+
+tr td:nth-child(2) {
+    text-align: center;
+}
+
+tr td:nth-child(3) {
+    text-align: center;
+}
+
+tr td:nth-child(4) {
+    text-align: right;
+}
+
+tr td:nth-child(6) {
+    text-align: right;
+}
+
+tr td:nth-child(7) {
+    text-align: right;
+}
+
+tr td:nth-child(9) {
+    text-align: center;
+}
+
+#increase {
+    text-align: right;
+}

@@ -1,0 +1,341 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.grm.sm.dao.StudentMapper" >
+
+    <select id="findByPage" resultMap="BaseResultMap" parameterType="com.grm.sm.dto.SelectDto">
+        select stu_id, stu_class, stu_created_time, stu_description, stu_email, stu_idcard, stu_name,
+        stu_no, stu_sex, stu_status, stu_telephone, stu_update_time
+        from student
+        <where>
+            <if test="stuName!=null and stuName!='' ">
+                stuName=#{selectDto.stuName}
+            </if>
+            <if test="stuClass!=null and stuClass!='' ">
+                and stuClass=#{selectDto.stuClass}
+            </if>
+            <if test="stuNo!=null and stuNo!='' ">
+                and stuNo=#{selectDto.stuNo}
+            </if>
+        </where>
+    </select>
+
+  <resultMap id="BaseResultMap" type="com.grm.sm.pojo.Student" >
+    <id column="stu_id" property="stuId" jdbcType="INTEGER" />
+    <result column="stu_class" property="stuClass" jdbcType="VARCHAR" />
+    <result column="stu_created_time" property="stuCreatedTime" jdbcType="TIMESTAMP" />
+    <result column="stu_description" property="stuDescription" jdbcType="VARCHAR" />
+    <result column="stu_email" property="stuEmail" jdbcType="VARCHAR" />
+    <result column="stu_idcard" property="stuIdcard" jdbcType="VARCHAR" />
+    <result column="stu_name" property="stuName" jdbcType="VARCHAR" />
+    <result column="stu_no" property="stuNo" jdbcType="INTEGER" />
+    <result column="stu_sex" property="stuSex" jdbcType="INTEGER" />
+    <result column="stu_status" property="stuStatus" jdbcType="INTEGER" />
+    <result column="stu_telephone" property="stuTelephone" jdbcType="VARCHAR" />
+    <result column="stu_update_time" property="stuUpdateTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    stu_id, stu_class, stu_created_time, stu_description, stu_email, stu_idcard, stu_name, 
+    stu_no, stu_sex, stu_status, stu_telephone, stu_update_time
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.grm.sm.pojo.StudentExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from student
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from student
+    where stu_id = #{stuId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from student
+    where stu_id = #{stuId,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.grm.sm.pojo.StudentExample" >
+    delete from student
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.grm.sm.pojo.Student" >
+    insert into student (stu_id, stu_class, stu_created_time,
+      stu_description, stu_email, stu_idcard, 
+      stu_name, stu_no, stu_sex, 
+      stu_status, stu_telephone, stu_update_time
+      )
+    values (#{stuId,jdbcType=INTEGER}, #{stuClass,jdbcType=VARCHAR}, #{stuCreatedTime,jdbcType=TIMESTAMP},
+      #{stuDescription,jdbcType=VARCHAR}, #{stuEmail,jdbcType=VARCHAR}, #{stuIdcard,jdbcType=VARCHAR}, 
+      #{stuName,jdbcType=VARCHAR}, #{stuNo,jdbcType=INTEGER}, #{stuSex,jdbcType=INTEGER}, 
+      #{stuStatus,jdbcType=INTEGER}, #{stuTelephone,jdbcType=VARCHAR}, #{stuUpdateTime,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.grm.sm.pojo.Student" >
+    insert into student
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="stuId != null" >
+        stu_id,
+      </if>
+      <if test="stuClass != null" >
+        stu_class,
+      </if>
+      <if test="stuCreatedTime != null" >
+        stu_created_time,
+      </if>
+      <if test="stuDescription != null" >
+        stu_description,
+      </if>
+      <if test="stuEmail != null" >
+        stu_email,
+      </if>
+      <if test="stuIdcard != null" >
+        stu_idcard,
+      </if>
+      <if test="stuName != null" >
+        stu_name,
+      </if>
+      <if test="stuNo != null" >
+        stu_no,
+      </if>
+      <if test="stuSex != null" >
+        stu_sex,
+      </if>
+      <if test="stuStatus != null" >
+        stu_status,
+      </if>
+      <if test="stuTelephone != null" >
+        stu_telephone,
+      </if>
+      <if test="stuUpdateTime != null" >
+        stu_update_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="stuId != null" >
+        #{stuId,jdbcType=INTEGER},
+      </if>
+      <if test="stuClass != null" >
+        #{stuClass,jdbcType=VARCHAR},
+      </if>
+      <if test="stuCreatedTime != null" >
+        #{stuCreatedTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="stuDescription != null" >
+        #{stuDescription,jdbcType=VARCHAR},
+      </if>
+      <if test="stuEmail != null" >
+        #{stuEmail,jdbcType=VARCHAR},
+      </if>
+      <if test="stuIdcard != null" >
+        #{stuIdcard,jdbcType=VARCHAR},
+      </if>
+      <if test="stuName != null" >
+        #{stuName,jdbcType=VARCHAR},
+      </if>
+      <if test="stuNo != null" >
+        #{stuNo,jdbcType=INTEGER},
+      </if>
+      <if test="stuSex != null" >
+        #{stuSex,jdbcType=INTEGER},
+      </if>
+      <if test="stuStatus != null" >
+        #{stuStatus,jdbcType=INTEGER},
+      </if>
+      <if test="stuTelephone != null" >
+        #{stuTelephone,jdbcType=VARCHAR},
+      </if>
+      <if test="stuUpdateTime != null" >
+        #{stuUpdateTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.grm.sm.pojo.StudentExample" resultType="java.lang.Integer" >
+    select count(*) from student
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update student
+    <set >
+      <if test="record.stuId != null" >
+        stu_id = #{record.stuId,jdbcType=INTEGER},
+      </if>
+      <if test="record.stuClass != null" >
+        stu_class = #{record.stuClass,jdbcType=VARCHAR},
+      </if>
+      <if test="record.stuCreatedTime != null" >
+        stu_created_time = #{record.stuCreatedTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.stuDescription != null" >
+        stu_description = #{record.stuDescription,jdbcType=VARCHAR},
+      </if>
+      <if test="record.stuEmail != null" >
+        stu_email = #{record.stuEmail,jdbcType=VARCHAR},
+      </if>
+      <if test="record.stuIdcard != null" >
+        stu_idcard = #{record.stuIdcard,jdbcType=VARCHAR},
+      </if>
+      <if test="record.stuName != null" >
+        stu_name = #{record.stuName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.stuNo != null" >
+        stu_no = #{record.stuNo,jdbcType=INTEGER},
+      </if>
+      <if test="record.stuSex != null" >
+        stu_sex = #{record.stuSex,jdbcType=INTEGER},
+      </if>
+      <if test="record.stuStatus != null" >
+        stu_status = #{record.stuStatus,jdbcType=INTEGER},
+      </if>
+      <if test="record.stuTelephone != null" >
+        stu_telephone = #{record.stuTelephone,jdbcType=VARCHAR},
+      </if>
+      <if test="record.stuUpdateTime != null" >
+        stu_update_time = #{record.stuUpdateTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update student
+    set stu_id = #{record.stuId,jdbcType=INTEGER},
+      stu_class = #{record.stuClass,jdbcType=VARCHAR},
+      stu_created_time = #{record.stuCreatedTime,jdbcType=TIMESTAMP},
+      stu_description = #{record.stuDescription,jdbcType=VARCHAR},
+      stu_email = #{record.stuEmail,jdbcType=VARCHAR},
+      stu_idcard = #{record.stuIdcard,jdbcType=VARCHAR},
+      stu_name = #{record.stuName,jdbcType=VARCHAR},
+      stu_no = #{record.stuNo,jdbcType=INTEGER},
+      stu_sex = #{record.stuSex,jdbcType=INTEGER},
+      stu_status = #{record.stuStatus,jdbcType=INTEGER},
+      stu_telephone = #{record.stuTelephone,jdbcType=VARCHAR},
+      stu_update_time = #{record.stuUpdateTime,jdbcType=TIMESTAMP}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.grm.sm.pojo.Student" >
+    update student
+    <set >
+      <if test="stuClass != null" >
+        stu_class = #{stuClass,jdbcType=VARCHAR},
+      </if>
+      <if test="stuCreatedTime != null" >
+        stu_created_time = #{stuCreatedTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="stuDescription != null" >
+        stu_description = #{stuDescription,jdbcType=VARCHAR},
+      </if>
+      <if test="stuEmail != null" >
+        stu_email = #{stuEmail,jdbcType=VARCHAR},
+      </if>
+      <if test="stuIdcard != null" >
+        stu_idcard = #{stuIdcard,jdbcType=VARCHAR},
+      </if>
+      <if test="stuName != null" >
+        stu_name = #{stuName,jdbcType=VARCHAR},
+      </if>
+      <if test="stuNo != null" >
+        stu_no = #{stuNo,jdbcType=INTEGER},
+      </if>
+      <if test="stuSex != null" >
+        stu_sex = #{stuSex,jdbcType=INTEGER},
+      </if>
+      <if test="stuStatus != null" >
+        stu_status = #{stuStatus,jdbcType=INTEGER},
+      </if>
+      <if test="stuTelephone != null" >
+        stu_telephone = #{stuTelephone,jdbcType=VARCHAR},
+      </if>
+      <if test="stuUpdateTime != null" >
+        stu_update_time = #{stuUpdateTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where stu_id = #{stuId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.grm.sm.pojo.Student" >
+    update student
+    set stu_class = #{stuClass,jdbcType=VARCHAR},
+      stu_created_time = #{stuCreatedTime,jdbcType=TIMESTAMP},
+      stu_description = #{stuDescription,jdbcType=VARCHAR},
+      stu_email = #{stuEmail,jdbcType=VARCHAR},
+      stu_idcard = #{stuIdcard,jdbcType=VARCHAR},
+      stu_name = #{stuName,jdbcType=VARCHAR},
+      stu_no = #{stuNo,jdbcType=INTEGER},
+      stu_sex = #{stuSex,jdbcType=INTEGER},
+      stu_status = #{stuStatus,jdbcType=INTEGER},
+      stu_telephone = #{stuTelephone,jdbcType=VARCHAR},
+      stu_update_time = #{stuUpdateTime,jdbcType=TIMESTAMP}
+    where stu_id = #{stuId,jdbcType=INTEGER}
+  </update>
+</mapper>
