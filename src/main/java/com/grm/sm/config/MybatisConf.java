@@ -7,6 +7,8 @@ import org.springframework.context.annotation.Configuration;
 import java.util.Properties;
 
 /**
+ * 配置mybatis的分页插件，并注册为bean
+ *
  * @author grm
  */
 @Configuration

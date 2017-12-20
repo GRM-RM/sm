@@ -36,7 +36,7 @@
             <td>
                 <input type="text" name="stuNo" pattern="^[0-9]*$" placeholder="请输入数字" id="stuNo"
                        onblur="checkByStuNo()"
-                       <#if (student ?? )>value="${student.stuNo?ifExists?c}"</#if>>
+                       <#if (student ?? )>value="${student.stuNo?ifExists}"</#if>>
                 <span id="stuNoMsg"></span>
             </td>
         </tr>

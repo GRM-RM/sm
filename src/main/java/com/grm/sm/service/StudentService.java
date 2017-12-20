@@ -12,10 +12,10 @@ import com.grm.sm.pojo.Student;
  */
 public interface StudentService {
     /**
-     * 分页查找学生，并且将结果封装成page类
+     * 分页查找学生，并且将结果封装成PageInfo类
      *
      * @param selectDto 查询条件封装的dto
-     * @return 返回封装结果page类
+     * @return 返回封装结果PageInfo类
      */
     PageInfo<Student> findByPage(SelectDto selectDto);
 

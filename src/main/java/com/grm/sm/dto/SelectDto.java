@@ -16,7 +16,7 @@ public class SelectDto {
     private Integer pageNum;
     /**是否精确查找。值为空时,根据学生姓名和学生班级进行模糊查询,否则进行精确查询*/
     private Integer exact;
-    /**进行删除操作后的结果信息*/
+    /**进行删除操作时的结果信息*/
     private String delMsg;
 
 

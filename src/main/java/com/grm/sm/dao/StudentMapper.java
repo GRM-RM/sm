@@ -7,6 +7,11 @@ import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
+/**
+ * mybatis逆向工程自动生成的dao操作数据库的接口
+ *
+ * @author grm
+ */
 @Mapper
 public interface StudentMapper {
     int countByExample(StudentExample example);

@@ -43,6 +43,7 @@ public class StudentController {
         ModelAndView check = CheckStudentInfo.check(modelAndView, student);
         //如果没通过了校验 check.getModel().size() > 0满足条件，返回对应的视图信息
         if (check.getModel().size() > 0) {
+            check.setViewName("add");
             return check;
         }
         //通过校验，执行添加操作
@@ -173,9 +174,10 @@ public class StudentController {
         ModelAndView check = CheckStudentInfo.check(modelAndView, student);
         if (check.getModel().size() > 0) {
             //如果没通过了校验 check.getModel().size() > 0满足条件，返回对应的视图信息
+            check.setViewName("edit");
             return check;
         }
-
+        //通过id查出学生
         Student byId = studentService.findById(student.getStuId());
         if (byId != null) {
             //如果存在该条记录，进行信息更新操作
@@ -189,7 +191,7 @@ public class StudentController {
     }
 
     /**
-     * ajax请求校验学生学号是否相同
+     * ajax请求校验学生学号是否已经存在
      *
      * @param stuNo 学生学号
      * @return 返回校验的结果

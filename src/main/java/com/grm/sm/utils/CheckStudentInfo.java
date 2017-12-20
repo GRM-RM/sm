@@ -4,10 +4,9 @@ import com.grm.sm.pojo.Student;
 import org.springframework.web.servlet.ModelAndView;
 
 /**
+ * 用于检测学生信息的工具类
  *
  * @author grm
- *
- * 用于检测学生信息的工具类
  */
 public class CheckStudentInfo {
 
@@ -16,14 +15,15 @@ public class CheckStudentInfo {
      *
      * @param modelAndView controller中返回的视图
      * @param student      需要校验的student对象
-     * @return             返回包含视图信息的model
+     * @return 返回包含视图信息的model
      */
     public static ModelAndView check(ModelAndView modelAndView, Student student) {
+        //对学生姓名信息过滤
         if (student.getStuName() != null && !"".equals(student.getStuName().trim())) {
             String stuName = FilterUtil.filterAddString(student.getStuName());
             student.setStuName(stuName);
         }
-
+        //对学生班级信息过滤
         if (student.getStuClass() != null && !"".equals(student.getStuClass().trim())) {
             String stuClass = FilterUtil.filterAddString(student.getStuClass());
             student.setStuClass(stuClass);
@@ -36,8 +36,8 @@ public class CheckStudentInfo {
             String[] stuTelephones = stuTelephone.split(";");
             for (String st : stuTelephones) {
                 if (!st.matches("^\\d{11}$")) {
+                    //校验失败，重新返回添加页面
                     modelAndView.addObject("stuTelephoneMsg", "电话输入的格式有误");
-                    modelAndView.setViewName("add");
                     return modelAndView;
                 }
             }
@@ -51,7 +51,6 @@ public class CheckStudentInfo {
             for (String se : stuEmails) {
                 if (!se.matches("^[a-zA-Z0-9_-]+@[a-zA-Z0-9_-]+(\\.[a-zA-Z0-9_-]+)+$")) {
                     modelAndView.addObject("stuEmailMsg", "邮箱输入的格式有误");
-                    modelAndView.setViewName("add");
                     return modelAndView;
                 }
             }

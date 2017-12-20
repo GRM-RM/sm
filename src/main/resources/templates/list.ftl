@@ -49,7 +49,7 @@
             <td class="stuStatus">休学</td>
         </#if>
 
-        <td>${stu.stuNo?ifExists?c}</td>
+        <td>${stu.stuNo?ifExists}</td>
         <td>${stu.stuClass?ifExists}</td>
         <td>${stu.stuIdcard?ifExists}</td>
         <td>${stu.stuTelephone?ifExists}</td>

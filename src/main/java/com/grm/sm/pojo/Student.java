@@ -2,6 +2,11 @@ package com.grm.sm.pojo;
 
 import java.util.Date;
 
+/**
+ * mybatis逆向工程自动生成的实体类
+ *
+ * @author grm
+ */
 public class Student {
     private Integer stuId;
 

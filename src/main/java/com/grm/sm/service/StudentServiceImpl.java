@@ -11,23 +11,30 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 
 /**
+ * 业务层接口实现类
+ *
  * @author grm
  */
 @Service
 public class StudentServiceImpl implements StudentService {
 
+    /**
+     * 自动注入dao层
+     */
     @Autowired
     private StudentMapper studentMapper;
 
     @Override
     public PageInfo<Student> findByPage(SelectDto selectDto) {
+        //mybatis分页插件进行分页传入页码和页面大小
         PageHelper.startPage(selectDto.getPageNum(), Constants.PAGESIZE);
         StudentExample example = new StudentExample();
         StudentExample.Criteria criteria = example.createCriteria();
-
+        //根据exact的值分别进行模糊查询和精确查询
         if (selectDto.getExact() != null) {
             if (selectDto.getStuName() != null && !"".equals(selectDto.getStuName().trim())) {
                 criteria.andStuNameEqualTo(selectDto.getStuName());
@@ -41,13 +48,13 @@ public class StudentServiceImpl implements StudentService {
                 criteria.andStuNoEqualTo(selectDto.getStuNo());
             }
 
-        }else {
+        } else {
             if (selectDto.getStuName() != null && !"".equals(selectDto.getStuName().trim())) {
-                criteria.andStuNameLike("%"+selectDto.getStuName()+"%");
+                criteria.andStuNameLike("%" + selectDto.getStuName() + "%");
             }
 
             if (selectDto.getStuClass() != null && !"".equals(selectDto.getStuClass().trim())) {
-                criteria.andStuClassLike("%"+selectDto.getStuClass()+"%");
+                criteria.andStuClassLike("%" + selectDto.getStuClass() + "%");
             }
 
             if (selectDto.getStuNo() != null) {
@@ -80,6 +87,9 @@ public class StudentServiceImpl implements StudentService {
 
     @Override
     public void update(Student student) {
+        //修改最后更新时间
+        Date date = new Date();
+        student.setStuUpdateTime(date);
         studentMapper.updateByPrimaryKey(student);
     }
 
@@ -101,33 +111,33 @@ public class StudentServiceImpl implements StudentService {
                 criteria.andStuNoEqualTo(selectDto.getStuNo());
             }
 
-        }else {
+        } else {
             if (selectDto.getStuName() != null && !"".equals(selectDto.getStuName().trim())) {
-                criteria.andStuNameLike("%"+selectDto.getStuName()+"%");
+                criteria.andStuNameLike("%" + selectDto.getStuName() + "%");
             }
 
             if (selectDto.getStuClass() != null && !"".equals(selectDto.getStuClass().trim())) {
-                criteria.andStuClassLike("%"+selectDto.getStuClass()+"%");
+                criteria.andStuClassLike("%" + selectDto.getStuClass() + "%");
             }
 
             if (selectDto.getStuNo() != null) {
                 criteria.andStuNoEqualTo(selectDto.getStuNo());
             }
         }
-
+        //根据查询条件，查询出有多少条记录
         int count = studentMapper.countByExample(example);
         return count;
     }
 
     @Override
     public Student findByStuNo(Integer stuNo) {
-        StudentExample studentExample=new StudentExample();
+        StudentExample studentExample = new StudentExample();
         StudentExample.Criteria criteria = studentExample.createCriteria();
         criteria.andStuNoEqualTo(stuNo);
         List<Student> students = studentMapper.selectByExample(studentExample);
-        if (students.size()>0){
+        if (students.size() > 0) {
             return students.get(0);
-        }else {
+        } else {
             return null;
         }
     }

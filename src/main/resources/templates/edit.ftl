@@ -35,7 +35,7 @@
         <tr>
             <td>学号：</td>
             <td>
-                <input type="text" name="stuNo" value="${student.stuNo?ifExists?c}" pattern="^[0-9]*$" placeholder="请输入数字"
+                <input type="text" name="stuNo" value="${student.stuNo?ifExists}" pattern="^[0-9]*$" placeholder="请输入数字"
                        readonly>
             </td>
         </tr>
